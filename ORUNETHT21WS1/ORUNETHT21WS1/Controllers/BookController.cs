@@ -37,7 +37,7 @@ namespace ORUNETHT21WS1.Controllers {
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult Edit(BookEditViewModel model) {
             try {
                 //kollar om vi kommer från "Create" istället för att vi som nu editerar något, hade också kunnat kolla om .Id == 0 men detta är mer explicit.
