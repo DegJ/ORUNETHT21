@@ -1,0 +1,48 @@
+﻿@using Shared.Models;
+@using Services;
+@model Shared.Models.BookEditViewModel
+@{
+    var title = Model.IsCreateBookView ? "Skapa ny bok" : "Ändra bok";
+    ViewBag.Title = title;
+    var hasErrorSaving = ViewBag.Error as bool?;
+    var savedCorrectly = ViewBag.Saved as bool?;
+}
+
+<h2>
+    @title
+</h2>
+
+@if (hasErrorSaving.GetValueOrDefault()) {
+    <p>Det blev ett fel när vi skulle spara, försök igen.</p>
+}
+
+@if (savedCorrectly.GetValueOrDefault()) {
+    <p>Boken är sparad!</p>
+}
+@*När man ska posta bilder är det viktigt att det är "multipart/form-data som typ på <form>*@
+@using (Html.BeginForm("Edit", "Book", FormMethod.Post, new { enctype = "multipart/form-data", @class="" })) {
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.IsCreateBookView)
+    @Html.HiddenFor(x => x.Id)
+    <div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Title)
+            @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Author)
+            @Html.TextBoxFor(x => x.Author, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Image)
+            @Html.TextBox(nameof(BookEditViewModel.Image), "", new { type = "file" })
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Spara bok" />
+    </div>
+
+    if (!string.IsNullOrEmpty(Model.ExistingImagePath)) {
+        <h3>Omslagsbild just nu:</h3>
+        <img src="@(ImageService.GetImagePathRelative(Model.ExistingImagePath))" style="max-width: 400px; max-height: 400px" />
+    }
+}

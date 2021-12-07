@@ -1,0 +1,60 @@
+﻿@using Services;
+@model List<Data.Models.Book>
+
+@{
+    ViewBag.Title = "Visa böcker";
+}
+
+<h2>Alla böker</h2>
+
+<a href="@Url.Action("Create")" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Lägg till ny bok</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Bild</th>
+            <th>Titel</th>
+            <th>Författare</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var book in Model) {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(book.ImagePath)) {
+                        <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
+                    }
+                </td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>
+                    <a href="@Url.Action("Edit",new { id = book.Id })"><i class="glyphicon glyphicon-edit"></i></a>
+                    <i class="glyphicon glyphicon-remove-circle deletebook" style="cursor: pointer" data-id="@book.Id" data-title="@book.Title"></i>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $('.deletebook').click(function () {
+            var $this = $(this);
+            var booktitle = $this.data('title');
+            if (!window.confirm('Vill du ta bort boken "' + booktitle + '" ?')) return;
+            var id = $this.data('id');
+            $.ajax({
+                url: 'api/book/delete',
+                method: 'POST',
+                data: { bookid: id },
+                success: function () {
+                    window.location.reload();
+                },
+                error: function () {
+                    window.alert('Kunde inte ta bort boken');
+                }
+            });
+        })
+    </script>
+}
