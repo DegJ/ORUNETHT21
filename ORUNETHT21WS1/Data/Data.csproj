@@ -53,12 +53,29 @@
   <ItemGroup>
     <Compile Include="BookContext.cs" />
     <Compile Include="BookRepository.cs" />
+    <Compile Include="Migrations\202112072018026_Init.cs" />
+    <Compile Include="Migrations\202112072018026_Init.designer.cs">
+      <DependentUpon>202112072018026_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112072040139_Added_Author_To_Book.cs" />
+    <Compile Include="Migrations\202112072040139_Added_Author_To_Book.designer.cs">
+      <DependentUpon>202112072040139_Added_Author_To_Book.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202112072018026_Init.resx">
+      <DependentUpon>202112072018026_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112072040139_Added_Author_To_Book.resx">
+      <DependentUpon>202112072040139_Added_Author_To_Book.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
