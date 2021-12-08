@@ -3,11 +3,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
+using ORUNETHT21WS2.Models;
 using Owin;
-using ORUNETHT21WS1.Models;
 
-namespace ORUNETHT21WS1
+namespace ORUNETHT21WS2
 {
     public partial class Startup
     {

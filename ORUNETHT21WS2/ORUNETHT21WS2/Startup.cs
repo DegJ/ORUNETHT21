@@ -1,8 +1,9 @@
 ﻿using Microsoft.Owin;
+using ORUNETHT21WS2;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(ORUNETHT21WS1.Startup))]
-namespace ORUNETHT21WS1
+[assembly: OwinStartup(typeof(Startup))]
+namespace ORUNETHT21WS2
 {
     public partial class Startup
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ORUNETHT21WS1.Models
+namespace ORUNETHT21WS2.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

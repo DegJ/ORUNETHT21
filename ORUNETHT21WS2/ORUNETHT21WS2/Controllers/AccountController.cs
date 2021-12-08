@@ -1,16 +1,13 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using ORUNETHT21WS1.Models;
+using ORUNETHT21WS2.Models;
 
-namespace ORUNETHT21WS1.Controllers
+namespace ORUNETHT21WS2.Controllers
 {
     [Authorize]
     public class AccountController : Controller

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace ORUNETHT21WS1.Models
+namespace ORUNETHT21WS2.Models
 {
     public class IndexViewModel
     {

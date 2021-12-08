@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Data;
 using Shared.Models;
 
-
-namespace ORUNETHT21WS1.Controllers {
+namespace ORUNETHT21WS2.Controllers {
     [RoutePrefix("api/book")]
     public class BookApiController : ApiController {
 

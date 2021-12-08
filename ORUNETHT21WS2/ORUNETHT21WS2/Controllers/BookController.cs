@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Data;
 using Services;
 using Shared.Models;
 
-namespace ORUNETHT21WS1.Controllers {
+namespace ORUNETHT21WS2.Controllers {
     public class BookController : Controller {
 
         public BookService BookService {

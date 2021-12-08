@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using ORUNETHT21WS1.Models;
+using ORUNETHT21WS2.Models;
 
-namespace ORUNETHT21WS1
+namespace ORUNETHT21WS2
 {
     public class EmailService : IIdentityMessageService
     {
