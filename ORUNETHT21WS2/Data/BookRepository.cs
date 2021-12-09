@@ -10,7 +10,10 @@ namespace Data {
     public class BookRepository {
         public Book GetBook(int id) {
             using (var context = new BookContext()) {
-                return context.Books.FirstOrDefault(x => x.Id == id);
+                return context.Books
+                    .Include(x => x.AuthoredBy)
+                    .Include(x => x.Genres)
+                    .FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -26,7 +29,10 @@ namespace Data {
 
         public List<Book> GetAllBooks() {
             using (var context = new BookContext()) {
-                return context.Books.ToList();
+                return context.Books
+                    .Include(x => x.AuthoredBy)
+                    .Include(x => x.Genres)
+                    .ToList();
             }
         }
 

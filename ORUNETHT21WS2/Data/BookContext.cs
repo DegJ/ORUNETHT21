@@ -12,5 +12,14 @@ namespace Data {
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Author>().HasMany(x => x.Books)
+                .WithOptional(x => x.AuthoredBy)
+                .WillCascadeOnDelete(false);
+        }
     }
 }

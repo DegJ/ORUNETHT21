@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorRepository.cs" />
     <Compile Include="BookContext.cs" />
     <Compile Include="BookRepository.cs" />
     <Compile Include="Migrations\202112072018026_Init.cs" />
@@ -61,8 +62,14 @@
     <Compile Include="Migrations\202112072040139_Added_Author_To_Book.designer.cs">
       <DependentUpon>202112072040139_Added_Author_To_Book.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112091438219_added_genres_and_authors.cs" />
+    <Compile Include="Migrations\202112091438219_added_genres_and_authors.designer.cs">
+      <DependentUpon>202112091438219_added_genres_and_authors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112072040139_Added_Author_To_Book.resx">
       <DependentUpon>202112072040139_Added_Author_To_Book.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112091438219_added_genres_and_authors.resx">
+      <DependentUpon>202112091438219_added_genres_and_authors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

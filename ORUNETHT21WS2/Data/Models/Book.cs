@@ -9,9 +9,10 @@ namespace Data.Models {
     public class Book {
         [Key]
         public int Id { get; set; }
-
         public string Title { get; set; }
         public string Author { get; set; }
         public string ImagePath { get; set; }
+        public virtual Author AuthoredBy { get; set; }
+        public virtual ICollection<Genre> Genres { get; set; }
     }
 }

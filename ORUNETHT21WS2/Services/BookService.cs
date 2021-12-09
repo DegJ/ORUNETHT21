@@ -51,6 +51,10 @@ namespace Services {
                 newbook.ImagePath = ImageService.SaveImageToDisk(model.Image);
                 model.ExistingImagePath = newbook.ImagePath;
             }
+
+            if (model.ChosenAuthor.HasValue) {
+
+            }
             BookRepository.SaveBook(newbook);
             return model;
         }

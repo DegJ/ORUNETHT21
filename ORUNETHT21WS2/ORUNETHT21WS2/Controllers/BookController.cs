@@ -31,7 +31,8 @@ namespace ORUNETHT21WS2.Controllers {
             return View(model);
         }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(BookEditViewModel model) {
             try {
                 //kollar om vi kommer från "Create" istället för att vi som nu editerar något, hade också kunnat kolla om .Id == 0 men detta är mer explicit.
@@ -48,6 +49,11 @@ namespace ORUNETHT21WS2.Controllers {
                 ViewBag.Error = true;
                 return View(model);
             }
+        }
+
+        public ActionResult Details(int id) {
+            var book = BookRepository.GetBook(id);
+            return View(book);
         }
     }
 }

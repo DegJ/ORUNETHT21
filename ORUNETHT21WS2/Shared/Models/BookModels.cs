@@ -17,6 +17,15 @@ namespace Shared.Models {
         public HttpPostedFileBase Image { get; set; }
         public string ExistingImagePath { get; set; }
         public bool IsCreateBookView { get; set; }
+        public int? ChosenAuthor { get; set; }
+        public int[] ChosenGenres { get; set; }
+        public List<BookEditKeyValueViewModel> Authors { get; set; }
+        public List<BookEditKeyValueViewModel> Genres { get; set; }
+    }
+
+    public class BookEditKeyValueViewModel {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class BookDeleteModel {

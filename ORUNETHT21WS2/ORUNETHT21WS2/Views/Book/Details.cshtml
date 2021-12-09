@@ -1,0 +1,44 @@
+﻿@using Services
+@model Data.Models.Book
+
+@{
+    var title = Model.Title;
+    ViewBag.Title = title;
+}
+
+<h2>@title</h2>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Författare
+        </dt>
+        S
+        <dd>
+            @if (Model.AuthoredBy != null) {
+            <a href="@Url.Action("Details", "Author")">@Model.AuthoredBy.Name</a>
+            } else {
+                @("Anonym författare")
+            }
+        </dd>
+    </dl>
+
+    @if (!string.IsNullOrEmpty(Model.ImagePath)) {
+        <h3>Omslagsbild:</h3>
+        <img src="@(ImageService.GetImagePathRelative(Model.ImagePath))" style="max-width: 400px; max-height: 400px" />
+    }
+</div>
+<p>
+    @Html.ActionLink("Ändra bok", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tillbaka till listningen av böcker", "Index")
+</p>
