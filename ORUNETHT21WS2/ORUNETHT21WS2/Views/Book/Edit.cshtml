@@ -1,4 +1,5 @@
-﻿@using Shared.Models;
+﻿@using Data.Models
+@using Shared.Models;
 @using Services;
 @model Shared.Models.BookEditViewModel
 @{
@@ -20,7 +21,7 @@
     <p>Boken är sparad!</p>
 }
 @*När man ska posta bilder är det viktigt att det är "multipart/form-data som typ på <form>*@
-@using (Html.BeginForm("Edit", "Book", FormMethod.Post, new { enctype = "multipart/form-data", @class="" })) {
+@using (Html.BeginForm("Edit", "Book", FormMethod.Post, new { enctype = "multipart/form-data", @class = "" })) {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.IsCreateBookView)
     @Html.HiddenFor(x => x.Id)
@@ -30,12 +31,37 @@
             @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(x => x.Author)
-            @Html.TextBoxFor(x => x.Author, new { @class = "form-control" })
-        </div>
-        <div class="form-group">
             @Html.LabelFor(x => x.Image)
             @Html.TextBox(nameof(BookEditViewModel.Image), "", new { type = "file" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ChosenAuthor)
+            <select name="@(nameof(BookEditViewModel.ChosenAuthor))">
+                @if (Model.Authors != null && Model.Authors.Any()) {
+                    foreach (var author in Model.Authors) {
+                        <option @(Model.ChosenAuthor == author.Id ? "selected='selected'" : "") value="@author.Id">@author.Name</option>
+                    }
+                } else {
+                    <option disabled="disabled">Inga författare att välja på</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ChosenGenres)
+
+            @if (Model.Genres != null && Model.Genres.Any()) {
+                foreach (var genre in Model.Genres) {
+                    <label>
+                        <input name="@(nameof(BookEditViewModel.ChosenGenres))" @((Model.ChosenGenres?.Contains(genre.Id) ?? false) ? "checked='checked'" : "") type="checkbox" value="@genre.Id" />
+                        @genre.Name
+                    </label>
+                }
+            } else {
+                <label>
+                    <input type="checkbox" disabled="disabled" value="" />
+                    Inga genres att välja på
+                </label>
+            }
         </div>
 
         <input class="btn btn-primary" type="submit" value="Spara bok" />

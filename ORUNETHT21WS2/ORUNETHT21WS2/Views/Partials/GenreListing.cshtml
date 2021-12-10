@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Data.Models.Genre>
+@{
+    //om det är null eller finns inga alls, rendera ingenting
+    if (Model == null || !Model.Any()) { return; }
+    //vi gör så här så vi får indexing och så den inte behöver "räkna upp" och läsa in alla objekt i vår IEnumerable hela tiden.
+    var genres = Model.ToList();
+}
+<span>
+    @for (var i = 0; i < genres.Count; i++) {
+        var genre = genres[i];
+        <a href="@Url.Action("Details", "Genre", new {id = genre.Id})">@genre.Name</a>@(i+1 != genres.Count ? ", ": "")
+    }
+</span>

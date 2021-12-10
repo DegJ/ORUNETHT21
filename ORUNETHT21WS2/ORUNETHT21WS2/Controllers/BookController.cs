@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using Data;
+using Microsoft.AspNet.Identity.Owin;
 using Services;
 using Shared.Models;
 
@@ -8,7 +10,7 @@ namespace ORUNETHT21WS2.Controllers {
     public class BookController : Controller {
 
         public BookService BookService {
-            get { return new BookService(); }
+            get { return new BookService(HttpContext.GetOwinContext().Get<BookContext>()); }
         }
         public BookRepository BookRepository {
             get { return new BookRepository(); }
@@ -20,9 +22,7 @@ namespace ORUNETHT21WS2.Controllers {
         }
 
         public ActionResult Create() {
-            var model = new BookEditViewModel() {
-                IsCreateBookView = true
-            };
+            var model = BookService.GetEditModel(null);
             //det går bra att själv sätta vilken vy/cshtml fil som ska försöka renderas
             return View("Edit", model);
         }
@@ -45,7 +45,7 @@ namespace ORUNETHT21WS2.Controllers {
                 ViewBag.Saved = true;
                 return View(model);
 
-            } catch (Exception e) {
+            } catch {
                 ViewBag.Error = true;
                 return View(model);
             }

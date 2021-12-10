@@ -16,6 +16,7 @@
             <th>Bild</th>
             <th>Titel</th>
             <th>Författare</th>
+            <th>Genres</th>
             <th></th>
         </tr>
     </thead>
@@ -28,8 +29,17 @@
                         <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
                     }
                 </td>
-                <td>@book.Title</td>
-                <td>@book.Author</td>
+                <td>@Html.ActionLink(book.Title, "Details", new { id = book.Id })</td>
+                <td>
+                    @if (book.AuthoredBy != null) {
+                        <a href="@Url.Action("Details", "Author", new {id = book.AuthoredBy.Id})"></a>
+                    } else {
+                        @("Anonym")
+                    }
+                </td>
+                <td>
+                    @Html.Partial("GenreListing", book.Genres)
+                </td>
                 <td>
                     <a href="@Url.Action("Edit",new { id = book.Id })"><i class="glyphicon glyphicon-edit"></i></a>
                     <i class="glyphicon glyphicon-remove-circle deletebook" style="cursor: pointer" data-id="@book.Id" data-title="@book.Title"></i>

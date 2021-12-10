@@ -15,5 +15,29 @@ namespace Data {
                     .FirstOrDefault(x => x.Id == id);
             }
         }
+
+        public List<Author> GetAuthors() {
+            using (var context = new BookContext()) {
+                return context.Authors
+                    .Include(x => x.Books)
+                    .ToList();
+            }
+        }
+        public void DeleteAuthor(int id) {
+            using (var context = new BookContext()) {
+                var author = context.Authors.FirstOrDefault(x => x.Id == id);
+                if (author != null) {
+                    context.Authors.Remove(author);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void CreateAuthor(Author author) {
+            using (var context = new BookContext()) {
+                context.Authors.Add(author);
+                context.SaveChanges();
+            }
+        }
     }
 }

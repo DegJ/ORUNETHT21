@@ -23,13 +23,19 @@
         <dt>
             Författare
         </dt>
-        S
+
         <dd>
             @if (Model.AuthoredBy != null) {
-            <a href="@Url.Action("Details", "Author")">@Model.AuthoredBy.Name</a>
+                <a href="@Url.Action("Details", "Author")">@Model.AuthoredBy.Name</a>
             } else {
                 @("Anonym författare")
             }
+        </dd>
+        <dt>
+            Genres
+        </dt>
+        <dd>
+            @Html.Partial("GenreListing", Model.Genres)
         </dd>
     </dl>
 

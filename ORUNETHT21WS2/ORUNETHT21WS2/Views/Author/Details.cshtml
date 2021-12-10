@@ -1,13 +1,12 @@
-﻿@model Data.Models.Author
+﻿@using Services
+@model Data.Models.Author
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Författare";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Author</h4>
+    <h4>Författare</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,9 +16,30 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
     </dl>
+    <p>Böcker skriva</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Bild</th>
+                <th>Titel</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.Books) {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(book.ImagePath)) {
+                            <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
+                        }
+                    </td>
+                    <td><a href="@Url.Action("Details", "Book", new {id = book.Id})"></a></td>
+                    <td>
+                        <a href="@Url.Action("Edit",new { id = book.Id })"><i class="glyphicon glyphicon-edit"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
-</p>

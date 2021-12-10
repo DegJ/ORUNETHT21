@@ -1,0 +1,51 @@
+﻿@model List<Data.Models.Author>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Författare</h2>
+
+<p>
+    @Html.ActionLink("Skapa ny författare", "Create")
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Namn</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var author in Model) {
+            <tr>
+                <td>@Html.ActionLink(author.Name, "Details", new { id = author.Id })</td>
+                <td>
+                    <a href="@Url.Action("Edit",new { id = author.Id })"><i class="glyphicon glyphicon-edit"></i></a>
+                    <i class="glyphicon glyphicon-remove-circle deleteauthor" style="cursor: pointer" data-id="@author.Id" data-name="@author.Name"></i>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $('.deleteauthor').click(function () {
+            var $this = $(this);
+            var authorname = $this.data('name');
+            if (!window.confirm('Vill du ta bort författaren "' + authorname + '" ?')) return;
+            var id = $this.data('id');
+            $.ajax({
+                url: 'api/author/delete/' + id,
+                method: 'POST',
+                success: function () {
+                    window.location.reload();
+                },
+                error: function () {
+                    window.alert('Kunde inte ta bort författare');
+                }
+            });
+        })
+    </script>
+}
