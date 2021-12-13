@@ -13,6 +13,7 @@ namespace ORUNETHT21WS2.Controllers {
         [HttpGet]
         public WeatherData GetWeather() {
             var weatherservice = new WeatherService();
+            //Örebros lat och lon
             var weatherdata = weatherservice.GetForecast(59.27M, 15.20M);
             return weatherdata;
         }

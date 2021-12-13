@@ -19,6 +19,7 @@ namespace Data {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Author>().HasMany(x => x.Books)
                 .WithOptional(x => x.AuthoredBy)
+                .HasForeignKey(x => x.AuthoredById)
                 .WillCascadeOnDelete(false);
         }
     }

@@ -1,0 +1,40 @@
+﻿@using Services;
+@model List<Data.Models.Book>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Bild</th>
+            <th>Titel</th>
+            <th>Författare</th>
+            <th>Genres</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var book in Model) {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(book.ImagePath)) {
+                        <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
+                    }
+                </td>
+                <td>@Html.ActionLink(book.Title, "Details", new { id = book.Id })</td>
+                <td>
+                    @if (book.AuthoredBy != null) {
+                        <a href="@Url.Action("Details", "Author", new {id = book.AuthoredBy.Id})">@book.AuthoredBy.Name</a>
+                    } else {
+                        @("Anonym")
+                    }
+                </td>
+                <td>
+                    @Html.Partial("Partials/GenreListing", book.Genres)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit",new { id = book.Id })"><i class="glyphicon glyphicon-edit"></i></a>
+                    <i class="glyphicon glyphicon-remove-circle deletebook" style="cursor: pointer" data-id="@book.Id" data-title="@book.Title"></i>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

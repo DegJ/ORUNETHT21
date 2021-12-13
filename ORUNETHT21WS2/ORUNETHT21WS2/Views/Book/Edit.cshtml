@@ -25,10 +25,12 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.IsCreateBookView)
     @Html.HiddenFor(x => x.Id)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div>
         <div class="form-group">
             @Html.LabelFor(x => x.Title)
             @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(x => x.Image)
@@ -38,6 +40,7 @@
             @Html.LabelFor(x => x.ChosenAuthor)
             <select name="@(nameof(BookEditViewModel.ChosenAuthor))">
                 @if (Model.Authors != null && Model.Authors.Any()) {
+                    <option value="">-- Ingen författare känd --</option>
                     foreach (var author in Model.Authors) {
                         <option @(Model.ChosenAuthor == author.Id ? "selected='selected'" : "") value="@author.Id">@author.Name</option>
                     }

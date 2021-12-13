@@ -71,6 +71,14 @@
     <Compile Include="Migrations\202112101240119_expose_authoredbyid_inmodel.designer.cs">
       <DependentUpon>202112101240119_expose_authoredbyid_inmodel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112131203140_remove_author_string_from_book.cs" />
+    <Compile Include="Migrations\202112131203140_remove_author_string_from_book.designer.cs">
+      <DependentUpon>202112131203140_remove_author_string_from_book.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112131307244_adding_validations_making_required_fields.cs" />
+    <Compile Include="Migrations\202112131307244_adding_validations_making_required_fields.designer.cs">
+      <DependentUpon>202112131307244_adding_validations_making_required_fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -93,6 +101,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112101240119_expose_authoredbyid_inmodel.resx">
       <DependentUpon>202112101240119_expose_authoredbyid_inmodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112131203140_remove_author_string_from_book.resx">
+      <DependentUpon>202112131203140_remove_author_string_from_book.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112131307244_adding_validations_making_required_fields.resx">
+      <DependentUpon>202112131307244_adding_validations_making_required_fields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

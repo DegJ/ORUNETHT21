@@ -1,4 +1,5 @@
-﻿@model Data.Models.Genre
+﻿@using Services
+@model Data.Models.Genre
 
 @{
     ViewBag.Title = "Details";
@@ -19,6 +20,32 @@
         </dd>
 
     </dl>
+    
+    <p>Böcker i denna genre</p>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Bild</th>
+            <th>Titel</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var book in Model.Books) {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(book.ImagePath)) {
+                        <a href="@Url.Action("Details", "Book", new {id = book.Id})">
+                            <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
+                        </a>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Book", new { id = book.Id })">@book.Title</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

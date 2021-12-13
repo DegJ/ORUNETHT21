@@ -13,11 +13,14 @@ namespace ORUNETHT21WS2.Controllers {
             get { return new BookService(HttpContext.GetOwinContext().Get<BookContext>()); }
         }
         public BookRepository BookRepository {
-            get { return new BookRepository(); }
+            get { return new BookRepository(HttpContext.GetOwinContext().Get<BookContext>()); }
         }
 
         public ActionResult Index() {
             var books = BookRepository.GetAllBooks();
+            if (Request.IsAjaxRequest()) {
+                return PartialView("BookTable", books);
+            }
             return View(books);
         }
 
@@ -34,6 +37,10 @@ namespace ORUNETHT21WS2.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BookEditViewModel model) {
+            if (!ModelState.IsValid) {
+                BookService.FillEditModelWithAssociations(model);
+                return View(model);
+            }
             try {
                 //kollar om vi kommer från "Create" istället för att vi som nu editerar något, hade också kunnat kolla om .Id == 0 men detta är mer explicit.
                 if (model.IsCreateBookView) {
@@ -43,10 +50,12 @@ namespace ORUNETHT21WS2.Controllers {
                     model = BookService.EditBook(model);
                 }
                 ViewBag.Saved = true;
-                return View(model);
 
+                BookService.FillEditModelWithAssociations(model);
+                return View(model);
             } catch {
                 ViewBag.Error = true;
+                BookService.FillEditModelWithAssociations(model);
                 return View(model);
             }
         }

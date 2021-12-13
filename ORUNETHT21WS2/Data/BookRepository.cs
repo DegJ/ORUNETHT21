@@ -8,45 +8,47 @@ using Data.Models;
 
 namespace Data {
     public class BookRepository {
+        private readonly BookContext _context;
+
+        public BookRepository(BookContext context) {
+            _context = context;
+        }
+
         public Book GetBook(int id) {
-            using (var context = new BookContext()) {
-                return context.Books
-                    .Include(x => x.AuthoredBy)
-                    .Include(x => x.Genres)
-                    .FirstOrDefault(x => x.Id == id);
-            }
+            return _context.Books
+                .Include(x => x.AuthoredBy)
+                .Include(x => x.Genres)
+                .FirstOrDefault(x => x.Id == id);
+
         }
 
         public bool DeleteBook(int id) {
-            using (var context = new BookContext()) {
-                var book = context.Books.FirstOrDefault(x => x.Id == id);
-                if (book == null) return false;
-                context.Books.Remove(book);
-                context.SaveChanges();
-                return true;
-            }
+            var book = _context.Books.FirstOrDefault(x => x.Id == id);
+            if (book == null) return false;
+            _context.Books.Remove(book);
+            _context.SaveChanges();
+            return true;
+
         }
 
         public List<Book> GetAllBooks() {
-            using (var context = new BookContext()) {
-                return context.Books
-                    .Include(x => x.AuthoredBy)
-                    .Include(x => x.Genres)
-                    .ToList();
-            }
+            return _context.Books
+                .Include(x => x.AuthoredBy)
+                .Include(x => x.Genres)
+                .ToList();
+
         }
 
         public Book SaveBook(Book book) {
-            using (var context = new BookContext()) {
-                if (book.Id != 0) { //om har fått ett id, då finns boken redan, vi ska spara det som ändrats.
-                    context.Entry(book).State = EntityState.Modified; // vi säger åt EF att denna boken med dess [Key] att vi vill spara om alla fält
-                } else {
-                    context.Books.Add(book);
-                }
-
-                context.SaveChanges();
-                return book;
+            if (book.Id != 0) { //om har fått ett id, då finns boken redan, vi ska spara det som ändrats.
+                _context.Entry(book).State = EntityState.Modified; // vi säger åt EF att denna boken med dess [Key] att vi vill spara om alla fält
+            } else {
+                _context.Books.Add(book);
             }
+
+            _context.SaveChanges();
+            return book;
+
         }
     }
 }

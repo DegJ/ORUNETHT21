@@ -38,7 +38,7 @@
                 .Index(t => t.Genre_Id)
                 .Index(t => t.Book_Id);
             
-            AddColumn("dbo.Books", "AuthoredBy_Id", c => c.Int());
+            AddColumn("dbo.Books", "AuthoredBy_Id", c => c.Int(nullable: true));
             CreateIndex("dbo.Books", "AuthoredBy_Id");
             AddForeignKey("dbo.Books", "AuthoredBy_Id", "dbo.Authors", "Id");
         }

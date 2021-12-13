@@ -8,36 +8,35 @@ using System.Data.Entity;
 
 namespace Data {
     public class AuthorRepository {
+        private readonly BookContext _context;
+
+        public AuthorRepository(BookContext context) {
+            _context = context;
+        }
+
         public Author GetAuthor(int id) {
-            using (var context = new BookContext()) {
-                return context.Authors
-                    .Include(x => x.Books)
-                    .FirstOrDefault(x => x.Id == id);
-            }
+            return _context.Authors
+                .Include(x => x.Books)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public List<Author> GetAuthors() {
-            using (var context = new BookContext()) {
-                return context.Authors
-                    .Include(x => x.Books)
-                    .ToList();
-            }
+            return _context.Authors
+                .Include(x => x.Books)
+                .ToList();
+
         }
         public void DeleteAuthor(int id) {
-            using (var context = new BookContext()) {
-                var author = context.Authors.FirstOrDefault(x => x.Id == id);
-                if (author != null) {
-                    context.Authors.Remove(author);
-                    context.SaveChanges();
-                }
+            var author = _context.Authors.FirstOrDefault(x => x.Id == id);
+            if (author != null) {
+                _context.Authors.Remove(author);
+                _context.SaveChanges();
             }
         }
 
         public void CreateAuthor(Author author) {
-            using (var context = new BookContext()) {
-                context.Authors.Add(author);
-                context.SaveChanges();
-            }
+            _context.Authors.Add(author);
+            _context.SaveChanges();
         }
     }
 }

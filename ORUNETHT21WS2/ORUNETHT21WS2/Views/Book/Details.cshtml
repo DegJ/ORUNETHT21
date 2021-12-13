@@ -26,7 +26,7 @@
 
         <dd>
             @if (Model.AuthoredBy != null) {
-                <a href="@Url.Action("Details", "Author")">@Model.AuthoredBy.Name</a>
+                <a href="@Url.Action("Details", "Author", new {id = Model.AuthoredBy.Id})">@Model.AuthoredBy.Name</a>
             } else {
                 @("Anonym författare")
             }
@@ -35,7 +35,7 @@
             Genres
         </dt>
         <dd>
-            @Html.Partial("GenreListing", Model.Genres)
+            @Html.Partial("Partials/GenreListing", Model.Genres)
         </dd>
     </dl>
 

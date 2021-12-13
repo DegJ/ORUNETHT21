@@ -10,8 +10,9 @@ namespace Data.Models {
     public class Book {
         [Key]
         public int Id { get; set; }
+        [Required]
+        [Display(Name = "Titel")]
         public string Title { get; set; }
-        public string Author { get; set; }
         public string ImagePath { get; set; }
         [ForeignKey(nameof(AuthoredBy))]
         public int? AuthoredById { get; set; }

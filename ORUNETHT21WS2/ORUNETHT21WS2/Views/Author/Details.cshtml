@@ -23,7 +23,6 @@
             <tr>
                 <th>Bild</th>
                 <th>Titel</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +30,13 @@
                 <tr>
                     <td>
                         @if (!string.IsNullOrEmpty(book.ImagePath)) {
-                            <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
+                            <a href="@Url.Action("Details", "Book", new {id = book.Id})">
+                                <img src="@(ImageService.GetImagePathRelative(book.ImagePath))" style="max-width: 50px; max-height: 50px" />
+                            </a>
                         }
                     </td>
-                    <td><a href="@Url.Action("Details", "Book", new {id = book.Id})"></a></td>
                     <td>
-                        <a href="@Url.Action("Edit",new { id = book.Id })"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="@Url.Action("Details", "Book", new { id = book.Id })">@book.Title</a>
                     </td>
                 </tr>
             }

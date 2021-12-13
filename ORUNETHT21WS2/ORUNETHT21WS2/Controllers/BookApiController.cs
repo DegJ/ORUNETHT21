@@ -1,5 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Net.Http;
+using System.Web.Http;
 using Data;
+using Microsoft.AspNet.Identity.Owin;
 using Shared.Models;
 
 namespace ORUNETHT21WS2.Controllers {
@@ -7,7 +9,7 @@ namespace ORUNETHT21WS2.Controllers {
     public class BookApiController : ApiController {
 
         public BookRepository BookRepository {
-            get { return new BookRepository(); }
+            get { return new BookRepository(Request.GetOwinContext().Get<BookContext>()); }
         }
 
         [HttpPost]   // Anropa med $.ajax eller $.post

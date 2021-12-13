@@ -1,26 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.UI.WebControls.WebParts;
 using Data;
 using Data.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ORUNETHT21WS2.Controllers {
     public class AuthorController : Controller {
+        private AuthorRepository AuthorRepository => new AuthorRepository(HttpContext.GetOwinContext().Get<BookContext>());
+
         public ActionResult Index() {
-            var authors = new AuthorRepository().GetAuthors();
+            var authors = AuthorRepository.GetAuthors();
             return View(authors);
         }
         public ActionResult Details(int id) {
-            var author = new AuthorRepository().GetAuthor(id);
+            var author = AuthorRepository.GetAuthor(id);
             return View(author);
         }
         public ActionResult Edit(int id) {
-            var author = new AuthorRepository().GetAuthor(id);
+            var author = AuthorRepository.GetAuthor(id);
             return View(author);
         }
         [System.Web.Mvc.HttpPost]
@@ -40,7 +45,7 @@ namespace ORUNETHT21WS2.Controllers {
         [ValidateAntiForgeryToken]
         public ActionResult Create(Author author) {
             try {
-                new AuthorRepository().CreateAuthor(author);
+                AuthorRepository.CreateAuthor(author);
                 return RedirectToAction("Index");
             } catch {
                 return View();
@@ -50,13 +55,14 @@ namespace ORUNETHT21WS2.Controllers {
 
     [System.Web.Http.RoutePrefix("api/author")]
     public class AuthorApiController : ApiController {
+        
+        private AuthorRepository AuthorRepository => new AuthorRepository(Request.GetOwinContext().Get<BookContext>());
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("delete/{id}")]
         public IHttpActionResult Delete(int id) {
             try {
-                var repository = new AuthorRepository();
-                repository.DeleteAuthor(id);
+                AuthorRepository.DeleteAuthor(id);
                 return Ok();
             } catch {
                 return BadRequest();

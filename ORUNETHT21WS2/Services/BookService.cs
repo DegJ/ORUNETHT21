@@ -13,10 +13,10 @@ namespace Services {
         private readonly BookContext _context;
 
         private BookRepository BookRepository {
-            get { return new BookRepository(); }
+            get { return new BookRepository(_context ?? new BookContext()); }
         }
         private AuthorRepository AuthorRepository {
-            get { return new AuthorRepository(); }
+            get { return new AuthorRepository(_context ?? new BookContext()); }
         }
         private GenreRepository GenreRepository {
             get { return new GenreRepository(_context ?? new BookContext()); }
@@ -36,7 +36,6 @@ namespace Services {
                 var book = BookRepository.GetBook(id.Value);
                 model.Id = book.Id;
                 model.Title = book.Title;
-                model.Author = book.Author;
                 model.ExistingImagePath = book.ImagePath;
                 model.ChosenAuthor = book.AuthoredById;
                 model.ChosenGenres = book.Genres.Select(x => x.Id).ToArray();
@@ -64,11 +63,39 @@ namespace Services {
             if (model.Image != null) {
                 if (!string.IsNullOrEmpty(book.ImagePath)) ImageService.RemoveImageFromDiskIfExists(book.ImagePath); //gör lite cleanup
                 book.ImagePath = ImageService.SaveImageToDisk(model.Image);
-                model.ExistingImagePath = book.ImagePath; //den nya pathen vi nu fick assignar vi så vi kan visa den för användaren med hjälp av BookEditModel i Viewn.
             }
+            model.ExistingImagePath = book.ImagePath;
 
             book.Title = model.Title;
-            book.Author = model.Author;
+            book.AuthoredById = model.ChosenAuthor != 0 ? model.ChosenAuthor : null;
+            /*
+             * ta bort de genres vi inte längre har valda
+             * vi gör det i två steg, en för att ta reda på vilka som bör tas bort för de inte längre är valda
+             * det andra ssteget är att faktiskt ta bort dem från boken och därmed låta EF veta med en "remove" på listan vilka som ska bort.
+             */
+            if (book.Genres != null) {
+                var toRemoveGenres = new List<Genre>();
+                foreach (var genre in book.Genres) {
+                    if (model.ChosenGenres == null || !model.ChosenGenres.Contains(genre.Id))
+                        toRemoveGenres.Add(genre);
+                }
+
+                foreach (var genre in toRemoveGenres) {
+                    book.Genres.Remove(genre);
+                }
+            }
+
+            //vi lägger sedan till de nya valen som inte tidigare var valda.
+            if (model.ChosenGenres != null) {
+                if (book.Genres == null) book.Genres = new List<Genre>();
+                foreach (var genreid in model.ChosenGenres.Where(genreId => book.Genres.All(x => x.Id != genreId))) {
+                    var genre = GenreRepository.GetGenre(genreid);
+                    if (genre != null) {
+                        book.Genres.Add(genre);
+                    }
+                }
+            }
+
             BookRepository.SaveBook(book);
 
             return model;
@@ -76,7 +103,6 @@ namespace Services {
 
         public BookEditViewModel CreateNewBook(BookEditViewModel model) {
             var newbook = new Book() {
-                Author = model.Author,
                 Title = model.Title,
                 Genres = new List<Genre>()
             };
@@ -91,7 +117,7 @@ namespace Services {
                 foreach (var genreid in model.ChosenGenres) {
                     var genre = GenreRepository.GetGenre(genreid);
                     if (genre != null) {
-                        newbook.Genres.Add(genre); //multi contexts, need to fix = use owin context getter for singleton
+                        newbook.Genres.Add(genre);
                     }
                 }
             }
