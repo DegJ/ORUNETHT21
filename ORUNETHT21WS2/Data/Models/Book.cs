@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Models {
-    public class Book {
+namespace Data.Models
+{
+    public class Book
+    {
         [Key]
         public int Id { get; set; }
         [Required]
@@ -18,5 +20,7 @@ namespace Data.Models {
         public int? AuthoredById { get; set; }
         public virtual Author AuthoredBy { get; set; }
         public virtual ICollection<Genre> Genres { get; set; }
+        public decimal Rating { get; set; }
+        public string UserIdThatCreated { get; set; }
     }
 }

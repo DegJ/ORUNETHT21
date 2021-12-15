@@ -13,8 +13,8 @@ namespace ORUNETHT21WS2 {
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BookContext>());
-            Database.SetInitializer<BookContext>(new MigrateDatabaseToLatestVersion<BookContext, Data.Migrations.Configuration>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BookContext>());
+            //Database.SetInitializer<BookContext>(new MigrateDatabaseToLatestVersion<BookContext, Data.Migrations.Configuration>());
         }
     }
 }

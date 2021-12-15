@@ -79,6 +79,10 @@
     <Compile Include="Migrations\202112131307244_adding_validations_making_required_fields.designer.cs">
       <DependentUpon>202112131307244_adding_validations_making_required_fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112151343518_added_rating_to_book.cs" />
+    <Compile Include="Migrations\202112151343518_added_rating_to_book.designer.cs">
+      <DependentUpon>202112151343518_added_rating_to_book.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -107,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112131307244_adding_validations_making_required_fields.resx">
       <DependentUpon>202112131307244_adding_validations_making_required_fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112151343518_added_rating_to_book.resx">
+      <DependentUpon>202112151343518_added_rating_to_book.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
