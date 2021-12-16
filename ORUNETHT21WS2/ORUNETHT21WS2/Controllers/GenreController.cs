@@ -17,63 +17,82 @@ namespace ORUNETHT21WS2.Controllers {
         }
 
         // GET: Genre
-        public ActionResult Index() {
+        public ActionResult Index()
+        {
             var genres = GenreRepository.GetGenres();
             return View(genres);
         }
 
         // GET: Genre/Details/5
-        public ActionResult Details(int id) {
+        public ActionResult Details(int id)
+        {
             var genre = GenreRepository.GetGenre(id);
             return View(genre);
         }
 
         // GET: Genre/Create
-        public ActionResult Create() {
+        public ActionResult Create()
+        {
             return View();
         }
 
         // POST: Genre/Create
         [HttpPost]
-        public ActionResult Create(Genre genre) {
-            try {
+        public ActionResult Create(Genre genre)
+        {
+            var isValid = ModelState.IsValid;
+            if (!isValid) return View(genre);
+            try
+            {
                 GenreRepository.Create(genre);
                 return RedirectToAction("Index");
-            } catch {
+            }
+            catch
+            {
                 return View();
             }
         }
 
         // GET: Genre/Edit/5
-        public ActionResult Edit(int id) {
+        public ActionResult Edit(int id)
+        {
             var genre = GenreRepository.GetGenre(id);
             return View(genre);
         }
 
         // POST: Genre/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Genre genre) {
-            try {
+        public ActionResult Edit(int id, Genre genre)
+        {
+            try
+            {
                 GenreRepository.Edit(genre);
                 return RedirectToAction("Index");
-            } catch {
+            }
+            catch
+            {
                 return View();
             }
         }
 
         // GET: Genre/Delete/5
-        public ActionResult Delete(int id) {
+        public ActionResult Delete(int id)
+        {
             var genre = GenreRepository.GetGenre(id);
             return View(genre);
         }
 
         // POST: Genre/Delete/5
         [HttpPost]
-        public ActionResult DeleteGenre(int id) {
-            try {
+        public ActionResult DeleteGenre(int id)
+        {
+            try
+            {
                 GenreRepository.Delete(id);
                 return RedirectToAction("Index");
-            } catch {
+            }
+            catch
+            {
                 var genre = GenreRepository.GetGenre(id);
                 return View("Delete", genre);
             }

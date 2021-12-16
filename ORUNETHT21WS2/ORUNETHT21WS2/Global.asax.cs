@@ -14,6 +14,7 @@ namespace ORUNETHT21WS2 {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BookContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BookApplicationDbContext>());
             //Database.SetInitializer<BookContext>(new MigrateDatabaseToLatestVersion<BookContext, Data.Migrations.Configuration>());
         }
     }

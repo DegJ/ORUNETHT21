@@ -36,7 +36,6 @@ namespace Data {
                 .Include(x => x.AuthoredBy)
                 .Include(x => x.Genres)
                 .ToList();
-
         }
 
         public Book SaveBook(Book book) {
