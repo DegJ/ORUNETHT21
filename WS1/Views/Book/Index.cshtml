@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Data.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @{
+                    var imagepath = "/UploadedImages/" + item.ImagePath;
+                }
+                <img src="@imagepath" style="max-width: 100px" />
+            </td>
+            <td>
+                <button class="deletebook" data-id="@item.Id"> Ta bort</button>
+            </td>
+        </tr>
+    }
+
+</table>
+@section scripts {
+    <script>
+        $('.deletebook').click(function () {
+            var idforbook = $(this).data('id');
+            $.get('/api/book/delete/' + idforbook, function () {
+                window.alert('Vi tog bort boken');
+            })
+        })
+    </script>
+}
