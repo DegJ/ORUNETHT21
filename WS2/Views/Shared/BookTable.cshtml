@@ -1,0 +1,46 @@
+﻿@model List<Data.Book>
+    
+<table class="table">
+	<tr>
+		<th>
+			Titel
+		</th>
+		<th>
+			Författare
+		</th>
+		<th>
+			Bild
+		</th>
+		<th></th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model) {
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Title)
+			</td>
+			<td>
+				@if (item.AuthoredBy != null) {
+					<span>@item.AuthoredBy.Name</span>
+				}
+				else {
+					<span>Anonym Författare</span>
+				}
+			</td>
+			<td>
+				@{
+					var imagepath = "/UploadedImages/" + item.ImagePath;
+				}
+				<img src="@imagepath" style="max-width: 100px" />
+			</td>
+			<td>
+				@item.SavedByUser.UserName
+			</td>
+			<td>
+				<button class="deletebook" data-id="@item.Id"> Ta bort</button>
+			</td>
+		</tr>
+	}
+
+</table>

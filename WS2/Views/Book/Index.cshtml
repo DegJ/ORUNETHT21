@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Data.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+<p id="weatherdata"></p>
+<h2>Index</h2>
+@using (Html.BeginForm("SearchBooks", "Book", FormMethod.Post)) {
+	<input name="Search" type="text"/>
+	<button type="submit">Sök!</button>
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.Partial("BookTable", Model.ToList())
+@section scripts {
+    <script>
+        $('.deletebook').click(function () {
+            var idforbook = $(this).data('id');
+            $.get('/api/book/delete/' + idforbook, function () {
+                window.alert('Vi tog bort boken');
+            })
+        })
+    </script>
+    <script>
+        var weatherdataptag = $('#weatherdata');
+        $.ajax({
+            url: '/api/weather',
+            method: 'GET',
+            success: function (data) {
+                console.log('datan som kom:', data);
+                var htmlstring = 'Temperaturen just nu är: ' + data.TemperatureNow + '.'
+                weatherdataptag.html(htmlstring);
+            }
+        })
+            /*$.get('/api/weather', function(data){})*/
+    </script>
+}
